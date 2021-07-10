@@ -1,0 +1,43 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+    <div class="flex items-center min-h-screen">
+        <div class="container mx-auto">
+            <div class="max-w-lg mx-auto my-10 bg-white p-5 rounded-md shadow-sm">
+                <div class="text-center">
+                    <h1 class="my-3 text-3xl font-semibold text-gray-800">Contact Us</h1>
+                    <p class="text-gray-400">Fill up the form below to send us a message.</p>
+                </div>
+                <div class="m-7">
+                    <form method="POST" id="form">
+                        {% csrf_token %}
+{#                        <input type="checkbox" name="botcheck" class="hidden" />#}
+
+                        <div class="my-5">
+                            <label for="name" class="block mb-2 text-sm text-gray-600">Full Name</label>
+                            <input type="text" name="name" id="name" placeholder="John Doe" required class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500 focus:border-purple-500 focus:z-10" />
+                        </div>
+                        <div class="my-5">
+                            <label for="email" class="block mb-2 text-sm text-gray-600">Email Address</label>
+                            <input type="email" name="email" id="email" placeholder="you@company.com" required class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500 focus:border-purple-500 focus:z-10" />
+                        </div>
+                        <div class="my-5">
+                            <label for="phone" class="block mb-2 text-sm text-gray-600">Phone Number</label>
+                            <input type="text" name="phone" id="phone" placeholder="+880 1XXX XX XX XX" class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500 focus:border-purple-500 focus:z-10" />
+                        </div>
+                        <div class="my-5">
+                            <label for="message" class="block mb-2 text-sm text-gray-600">Your Message</label>
+
+                            <textarea rows="5" name="message" id="message" placeholder="Your Message" class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:ring-2 focus:outline-none focus:ring-purple-600 focus:border-purple-600" required></textarea>
+                        </div>
+                        <div class="my-5">
+                            <button type="submit" class="w-full py-4 px-4 border border-transparent font-medium rounded-md bg-gradient-to-r from-purple-600 to-fuchsia-500 tracking-wide text-base text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">Send Message</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,521 @@
+{% extends 'main.html' %}
+
+{% block title %}
+    Filter House
+{% endblock %}
+
+{% block content %}
+    <div class="max-w-7xl mx-auto my-5 px-4 sm:px-6 lg:px-8">
+        <form id="form" method="get">
+            {#    {% csrf_token %}#}
+            <div class="mt-10">
+                <div class="md:grid md:grid-cols-3 md:gap-6">
+                    <div class="md:col-span-1">
+                        <div class="px-4 sm:px-0">
+                            <h3 class="text-lg font-medium leading-6 text-gray-900">
+                                Basic Search
+                            </h3>
+                            <p class="mt-1 text-sm text-gray-600">
+                                Search by Area, Type & Price Range.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="mt-5 md:mt-0 md:col-span-2">
+                        <div class="shadow overflow-hidden sm:rounded-md">
+                            <div class="px-4 py-5 bg-white sm:p-6">
+                                <div class="grid grid-cols-6 gap-6">
+                                    <div class="col-span-6 sm:col-span-3">
+                                        <label
+                                                for="division"
+                                                class="block text-sm font-medium text-gray-700"
+                                        >
+                                            Division
+                                        </label>
+                                        <label for="category"></label>
+                                        <select
+                                                id="division"
+                                                name="division"
+                                                class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:ring-2 focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
+                                        >
+                                            <option value="">--- Select Division ---</option>
+                                            {% for division in divisions %}
+                                                <option value="{{ division }}">{{ division }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-span-6 sm:col-span-3">
+                                        <label
+                                                for="district"
+                                                class="block text-sm font-medium text-gray-700"
+                                        >
+                                            District
+                                        </label>
+                                        <label for="category"></label>
+                                        <select
+                                                id="district"
+                                                name="district"
+                                                class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
+                                        >
+                                            <option value="">--- Select District ---</option>
+                                            {% for district in districts %}
+                                                <option value="{{ district }}">{{ district }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-span-6 sm:col-span-3">
+                                        <label
+                                                for="price_min"
+                                                class="block text-sm font-medium text-gray-700"
+                                        >
+                                            Minimum Price
+                                        </label>
+                                        <label for="category"></label>
+                                        <input
+                                                type="number"
+                                                name="price_min"
+                                                id="price_min"
+                                                value="1000"
+                                                min="0"
+                                                class="mt-1 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                        />
+                                    </div>
+                                    <div class="col-span-6 sm:col-span-3">
+                                        <label
+                                                for="price_max"
+                                                class="block text-sm font-medium text-gray-700"
+                                        >
+                                            Maximum Price
+                                        </label>
+                                        <label for="category"></label>
+                                        <input
+                                                type="number"
+                                                name="price_max"
+                                                id="price_max"
+                                                value="10000"
+                                                min="0"
+                                                class="mt-1 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                        />
+                                    </div>
+
+                                    <div class="col-span-6">
+                                        <label
+                                                for="address"
+                                                class="block text-sm font-medium text-gray-700"
+                                        >
+                                            Street address
+                                        </label>
+                                        <input
+                                                type="text"
+                                                name="address"
+                                                id="address"
+                                                autoComplete="street-address"
+                                                class="mt-1 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                        />
+                                    </div>
+                                    <div class="col-span-6 sm:col-span-3">
+                                        <label
+                                                for="country"
+                                                class="block text-sm font-medium text-gray-700"
+                                        >
+                                            House Type
+                                        </label>
+                                        <label for="category"></label>
+                                        <select
+                                                id="category"
+                                                name="category"
+                                                class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:ring-2 focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
+                                        >
+                                            <option value="">--- Select ---</option>
+                                            <option value="Apartment">Apartment</option>
+                                            <option value="Duplex">Duplex</option>
+                                            <option value="Triplex">Triplex</option>
+                                            <option value="Sublet">Sublet</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hidden sm:block" aria-hidden="true">
+                <div class="py-5">
+                    <div class="border-t border-gray-200"></div>
+                </div>
+            </div>
+
+            <div class="my-10 sm:mt-0">
+                <div class="md:grid md:grid-cols-3 md:gap-6">
+                    <div class="md:col-span-1">
+                        <div class="px-4 sm:px-0">
+                            <h3 class="text-lg font-medium leading-6 text-gray-900">
+                                Advanced Search
+                            </h3>
+                            <p class="mt-1 text-sm text-gray-600">
+                                Not satisfied with the basic search? Search with everything of your choice.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="mt-5 md:mt-0 md:col-span-2">
+
+                        <div class="shadow sm:rounded-md sm:overflow-hidden">
+                            <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
+                                <div class="grid grid-cols-6 gap-6">
+                                    <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                                        <label
+                                                for="area"
+                                                class="block text-sm font-medium text-gray-700"
+                                        >
+                                            Area (sqft)
+                                        </label>
+                                        <input
+                                                type="number"
+                                                name="area"
+                                                id="area"
+                                                min="0"
+                                                value=""
+                                                class="mt-1 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                        />
+                                    </div>
+
+                                    <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                                        <label
+                                                for="beds"
+                                                class="block text-sm font-medium text-gray-700"
+                                        >
+                                            Bed Rooms
+                                        </label>
+                                        <input
+                                                type="number"
+                                                name="beds"
+                                                id="beds"
+                                                min="0"
+                                                value=""
+                                                class="mt-1 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                        />
+                                    </div>
+                                    <div class="col-span-6 sm:col-span-6 lg:col-span-2">
+                                        <label
+                                                for="baths"
+                                                class="block text-sm font-medium text-gray-700"
+                                        >
+                                            Showers
+                                        </label>
+                                        <input
+                                                type="number"
+                                                name="baths"
+                                                id="baths"
+                                                value=""
+                                                min="0"
+                                                class="mt-1 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                        />
+                                    </div>
+
+                                    <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                                        <label
+                                                for="kitchen"
+                                                class="block text-sm font-medium text-gray-700"
+                                        >
+                                            Kitchen
+                                        </label>
+                                        <input
+                                                type="number"
+                                                name="kitchen"
+                                                id="kitchen"
+                                                min="0"
+                                                value=""
+                                                class="mt-1 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                        />
+                                    </div>
+
+                                    <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                                        <label
+                                                for="drawing"
+                                                class="block text-sm font-medium text-gray-700"
+                                        >
+                                            Drawing Rooms
+                                        </label>
+                                        <input
+                                                type="number"
+                                                name="drawing"
+                                                id="drawing"
+                                                min="0"
+                                                value=""
+                                                class="mt-1 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                        />
+                                    </div>
+                                    <div class="col-span-6 sm:col-span-6 lg:col-span-2">
+                                        <label
+                                                for="dining"
+                                                class="block text-sm font-medium text-gray-700"
+                                        >
+                                            Dining Rooms
+                                        </label>
+                                        <input
+                                                type="number"
+                                                name="dining"
+                                                id="dining"
+                                                value=""
+                                                min="0"
+                                                class="mt-1 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                        />
+                                    </div>
+
+                                    <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                                        <label
+                                                for="parking_space"
+                                                class="block text-sm font-medium text-gray-700"
+                                        >
+                                            Parking Space
+                                        </label>
+                                        <input
+                                                type="number"
+                                                name="parking_space"
+                                                id="parking_space"
+                                                min="0"
+                                                value=""
+                                                class="mt-1 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                        />
+                                    </div>
+
+                                    <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                                        <label
+                                                for="elevators"
+                                                class="block text-sm font-medium text-gray-700"
+                                        >
+                                            Elevators
+                                        </label>
+                                        <input
+                                                type="number"
+                                                name="elevators"
+                                                id="elevators"
+                                                min="0"
+                                                value=""
+                                                class="mt-1 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                        />
+                                    </div>
+                                    <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                                        <label
+                                                for="balcony"
+                                                class="block text-sm font-medium text-gray-700"
+                                        >
+                                            Balcony
+                                        </label>
+                                        <select
+                                                id="balcony"
+                                                name="balcony"
+                                                class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:ring-2 focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
+                                        >
+                                            <option value="">--- Select ---</option>
+                                            <option value="true">Yes</option>
+                                            <option value="false">No</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                                        <label
+                                                for="electricity_backup"
+                                                class="block text-sm font-medium text-gray-700"
+                                        >
+                                            Electricity Backup
+                                        </label>
+                                        <select
+                                                id="electricity_backup"
+                                                name="electricity_backup"
+                                                class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:ring-2 focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
+                                        >
+                                            <option value="">--- Select ---</option>
+                                            <option value="true">Yes</option>
+                                            <option value="false">No</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                                        <label
+                                                for="service_elevator"
+                                                class="block text-sm font-medium text-gray-700"
+                                        >
+                                            Service Elevator
+                                        </label>
+                                        <select
+                                                id="service_elevator"
+                                                name="service_elevator"
+                                                class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:ring-2 focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
+                                        >
+                                            <option value="">--- Select ---</option>
+                                            <option value="true">Yes</option>
+                                            <option value="false">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+                                <button
+                                        type="submit"
+                                        class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+                                >
+                                    Search
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+        <div class="grid gap-5 my-5 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+            {% for house in filter.qs %}
+                <div class="mx-auto m-3">
+                    <a class="block bg-white rounded-md shadow-sm w-11/12 mx-auto"
+                       href="{% url 'house:detail' house.id %}">
+                        <div>
+                            <img src="https://images.unsplash.com/photo-1587614382346-4ec70e388b28?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                                 class="block rounded-t-md w-full h-48 object-cover" alt=""/>
+                            {#                    <img src="/work.jfif" class="block rounded-t-md w-full h-48 object-cover" />#}
+                        </div>
+                        <div class="flex justify-start items-center p-3 pb-2">
+                            <p class="capitalize text-sm text-gray-400 leading-3 mr-5">{{ house.category }}</p>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                 stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                            <small class="ml-5 mr-2 text-gray-700 font-semibold">BDT</small>
+                            <h3 class="text-xl text-gray-800 font-medium truncate">{{ house.price }}</h3>
+                        </div>
+
+                        <div class="px-3">
+                            <p
+                                    class="text-base text-purple-600 hover:text-purple-700 font-medium tracking-wide leading-6 truncate"
+                                    style="max-width: 20ch"
+                                    title="{{ house.address }}"
+                            >
+                                {{ house.address }}
+                            </p>
+                            <div class="flex items-center text-gray-400 my-5">
+                                <svg
+                                        aria-hidden="true"
+                                        focusable="false"
+                                        data-prefix="fas"
+                                        data-icon="bed"
+                                        class="svg-inline--fa fa-bed fa-w-20 h-5"
+                                        role="img"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 640 512"
+                                >
+                                    <path fill="currentColor"
+                                          d="M176 256c44.11 0 80-35.89 80-80s-35.89-80-80-80-80 35.89-80 80 35.89 80 80 80zm352-128H304c-8.84 0-16 7.16-16 16v144H64V80c0-8.84-7.16-16-16-16H16C7.16 64 0 71.16 0 80v352c0 8.84 7.16 16 16 16h32c8.84 0 16-7.16 16-16v-48h512v48c0 8.84 7.16 16 16 16h32c8.84 0 16-7.16 16-16V240c0-61.86-50.14-112-112-112z"></path>
+                                </svg>
+                                <span class="ml-2 text-gray-500">{{ house.beds }}</span>
+                                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bath"
+                                     class="svg-inline--fa fa-bath fa-w-16 h-5 w-5 ml-3" role="img"
+                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                    <path fill="currentColor"
+                                          d="M32,384a95.4,95.4,0,0,0,32,71.09V496a16,16,0,0,0,16,16h32a16,16,0,0,0,16-16V480H384v16a16,16,0,0,0,16,16h32a16,16,0,0,0,16-16V455.09A95.4,95.4,0,0,0,480,384V336H32ZM496,256H80V69.25a21.26,21.26,0,0,1,36.28-15l19.27,19.26c-13.13,29.88-7.61,59.11,8.62,79.73l-.17.17A16,16,0,0,0,144,176l11.31,11.31a16,16,0,0,0,22.63,0L283.31,81.94a16,16,0,0,0,0-22.63L272,48a16,16,0,0,0-22.62,0l-.17.17c-20.62-16.23-49.83-21.75-79.73-8.62L150.22,20.28A69.25,69.25,0,0,0,32,69.25V256H16A16,16,0,0,0,0,272v16a16,16,0,0,0,16,16H496a16,16,0,0,0,16-16V272A16,16,0,0,0,496,256Z"></path>
+                                </svg>
+                                <span class="ml-2 text-gray-500">{{ house.baths }}</span>
+                                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="th-large"
+                                     class="svg-inline--fa fa-th-large fa-w-16 h-5 w-5 ml-3" role="img"
+                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                    <path fill="currentColor"
+                                          d="M296 32h192c13.255 0 24 10.745 24 24v160c0 13.255-10.745 24-24 24H296c-13.255 0-24-10.745-24-24V56c0-13.255 10.745-24 24-24zm-80 0H24C10.745 32 0 42.745 0 56v160c0 13.255 10.745 24 24 24h192c13.255 0 24-10.745 24-24V56c0-13.255-10.745-24-24-24zM0 296v160c0 13.255 10.745 24 24 24h192c13.255 0 24-10.745 24-24V296c0-13.255-10.745-24-24-24H24c-13.255 0-24 10.745-24 24zm296 184h192c13.255 0 24-10.745 24-24V296c0-13.255-10.745-24-24-24H296c-13.255 0-24 10.745-24 24v160c0 13.255 10.745 24 24 24z"></path>
+                                </svg>
+                                <span class="ml-2 text-gray-500">{{ house.area }}</span>
+                            </div>
+                        </div>
+                        <div class="flex justify-between bg-gradient-to-r from-purple-600 to-fuchsia-500 text-gray-300 p-3 rounded-b-md">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-rose-800" fill="none"
+                                 viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width={2}
+                                      d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                            </svg>
+                            <p class="flex items-center">
+                                <span class="text-sm mr-2">Posted By</span>
+                                <span class="text-lg text-gray-100 font-medium">{{ house.owner.username }}</span>
+                            </p>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+
+        {% if is_paginated %}
+            <div class="bg-white my-3 px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+                <div class="flex-1 flex justify-between sm:hidden">
+                    <a href="#"
+                       class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-500">
+                        Previous
+                    </a>
+                    <a href="#"
+                       class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-500">
+                        Next
+                    </a>
+                </div>
+                <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                    <div>
+                        <p class="text-sm text-gray-700">
+                            Showing
+                            <span class="font-medium"> {{ page_obj.number }} </span>
+                            {#                        to#}
+                            {#                        <span class="font-medium"> {{ page_obj.number |multiply:-4 |add:paginator.count }} </span>#}
+                            of
+                            <span class="font-medium"> {{ paginator.num_pages }} </span>
+                            Pages
+                        </p>
+                    </div>
+                    <div>
+                        <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                            <a href="/?page=1"
+                               class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                <span class="sr-only">Previous</span>
+                                <!-- Heroicon name: solid/chevron-left -->
+                                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                     fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd"
+                                          d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                          clip-rule="evenodd"></path>
+                                </svg>
+                            </a>
+                            {% for page in paginator.page_range %}
+
+                                <a
+                                        href="/?page={{ page }}"
+                                        data-page-number="{{ page }}"
+                                        class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                    {{ page }}
+                                </a>
+                            {% endfor %}
+
+                            {#                        <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">#}
+                            {#                        ...#}
+                            {#                        </span>#}
+
+                            <a href="/?page={{ paginator.num_pages }}"
+                               class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                <span class="sr-only">Next</span>
+                                <!-- Heroicon name: solid/chevron-right -->
+                                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                     fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd"
+                                          d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                          clip-rule="evenodd"></path>
+                                </svg>
+                            </a>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    {#<form method="get">#}
+    {#    {{ filter.form.as_p }}#}
+    {#    <input type="submit" />#}
+    {#</form>#}
+    {#{% for obj in filter.qs %}#}
+    {#    {{ obj.name }} - ${{ obj.price }}<br />#}
+    {#{% endfor %}#}
+{% endblock %}

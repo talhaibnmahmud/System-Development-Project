@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block style %}
+<style>
+    ::-webkit-scrollbar {
+        width: 0.8rem;
+    }
+    ::-webkit-scrollbar-track {
+        background: #FAE8FF;
+        border-radius: 99rem;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #F0ABFC;
+        border-radius: 99rem;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: #E879F9;
+    }
+</style>
+{% endblock %}
+
+{% block main %}
+    {% include 'nav.html' %}
+
+    {% block content %}
+
+    {% endblock %}
+
+    {% include 'footer.html' %}
+
+{% endblock %}

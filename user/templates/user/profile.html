@@ -1,0 +1,160 @@
+{% extends 'main.html' %}
+
+{% block title %}
+    Profile - {{ user.username }}
+{% endblock %}
+
+{% block content %}
+    <div class="max-w-7xl mx-auto my-5 px-4 sm:px-6 lg:px-8">
+        <div class="md:flex no-wrap md:-mx-2">
+            <!-- Right Side -->
+            <div class="w-full md:w-9/12 md:mx-5">
+                <!-- Profile tab -->
+                <!-- About Section -->
+                <div class="bg-white p-3 shadow-md rounded-sm">
+                    <div class="flex items-center space-x-2 px-4 font-semibold text-gray-900 leading-8">
+                    <span class="text-green-500">
+                        <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                             stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                    </span>
+                        <span class="tracking-wide">About</span>
+                    </div>
+                    <div class="text-gray-700">
+                        <div class="grid md:grid-cols-2 text-sm">
+                            <div class="grid grid-cols-2">
+                                <div class="px-4 py-2 font-semibold">First Name</div>
+                                <div class="px-4 py-2">{{ user.first_name }}</div>
+                            </div>
+                            <div class="grid grid-cols-2">
+                                <div class="px-4 py-2 font-semibold">Last Name</div>
+                                <div class="px-4 py-2">{{ user.last_name }}</div>
+                            </div>
+                            {#                        <div class="grid grid-cols-2">#}
+                            {#                            <div class="px-4 py-2 font-semibold">Gender</div>#}
+                            {#                            <div class="px-4 py-2">Female</div>#}
+                            {#                        </div>#}
+                            <div class="grid grid-cols-2">
+                                <div class="px-4 py-2 font-semibold">Contact No.</div>
+                                <div class="px-4 py-2">{{ user.phone }}</div>
+                            </div>
+                            <div class="grid grid-cols-2">
+                                <div class="px-4 py-2 font-semibold">Email.</div>
+                                <div class="px-4 py-2">
+                                    <a class="text-purple-600 hover:text-purple-700 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+                                       href="mailto:jane@example.com">{{ user.email }}</a>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2">
+                                <div class="px-4 py-2 font-semibold">Account Status</div>
+                                <div class="px-4 py-2">
+                                    {% if user.is_active %}
+                                        Active
+                                    {% else %}
+                                        Inactive
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2">
+                                <div class="px-4 py-2 font-semibold">Member Since</div>
+                                <div class="px-4 py-2">{{ user.date_joined }}</div>
+                            </div>
+                            {#                        <div class="grid grid-cols-2">#}
+                            {#                            <div class="px-4 py-2 font-semibold">Birthday</div>#}
+                            {#                            <div class="px-4 py-2">Feb 06, 1998</div>#}
+                            {#                        </div>#}
+                        </div>
+                    </div>
+                    {% if request.user.is_authenticated and request.user == user %}
+                        <button
+                                class="block my-4 w-full bg-purple-600 text-white text-sm font-semibold rounded-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 hover:shadow-xs">
+                            <a class="inline-block w-full h-full p-3">Edit Profile</a>
+                        </button>
+                    {% endif %}
+                </div>
+                <!-- End of about section -->
+
+                <div class="my-4"></div>
+                <!-- End of profile tab -->
+            </div>
+        </div>
+
+        <div class="grid gap-5 my-5 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+            {% for house in houses %}
+                <div class="mx-auto m-3">
+                    <a class="block bg-white rounded-md shadow-sm w-11/12 mx-auto"
+                       href="{% url 'house:detail' house.id %}">
+                        <div>
+                            <img src="https://images.unsplash.com/photo-1587614382346-4ec70e388b28?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                                 class="block rounded-t-md w-full h-48 object-cover" alt=""/>
+                            {#                    <img src="/work.jfif" class="block rounded-t-md w-full h-48 object-cover" />#}
+                        </div>
+                        <div class="flex justify-start items-center p-3 pb-2">
+                            <p class="capitalize text-sm text-gray-400 leading-3 mr-5">{{ house.category }}</p>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                 stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                            <small class="ml-5 mr-2 text-gray-700 font-semibold">BDT</small>
+                            <h3 class="text-xl text-gray-800 font-medium truncate">{{ house.price }}</h3>
+                        </div>
+
+                        <div class="px-3">
+                            <p
+                                    class="text-base text-purple-600 hover:text-purple-700 font-medium tracking-wide leading-6 truncate"
+                                    style="max-width: 20ch"
+                                    title="{{ house.address }}"
+                            >
+                                {{ house.address }}
+                            </p>
+                            <div class="flex items-center text-gray-400 my-5">
+                                <svg
+                                        aria-hidden="true"
+                                        focusable="false"
+                                        data-prefix="fas"
+                                        data-icon="bed"
+                                        class="svg-inline--fa fa-bed fa-w-20 h-5"
+                                        role="img"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 640 512"
+                                >
+                                    <path fill="currentColor"
+                                          d="M176 256c44.11 0 80-35.89 80-80s-35.89-80-80-80-80 35.89-80 80 35.89 80 80 80zm352-128H304c-8.84 0-16 7.16-16 16v144H64V80c0-8.84-7.16-16-16-16H16C7.16 64 0 71.16 0 80v352c0 8.84 7.16 16 16 16h32c8.84 0 16-7.16 16-16v-48h512v48c0 8.84 7.16 16 16 16h32c8.84 0 16-7.16 16-16V240c0-61.86-50.14-112-112-112z"></path>
+                                </svg>
+                                <span class="ml-2 text-gray-500">{{ house.beds }}</span>
+                                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bath"
+                                     class="svg-inline--fa fa-bath fa-w-16 h-5 w-5 ml-3" role="img"
+                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                    <path fill="currentColor"
+                                          d="M32,384a95.4,95.4,0,0,0,32,71.09V496a16,16,0,0,0,16,16h32a16,16,0,0,0,16-16V480H384v16a16,16,0,0,0,16,16h32a16,16,0,0,0,16-16V455.09A95.4,95.4,0,0,0,480,384V336H32ZM496,256H80V69.25a21.26,21.26,0,0,1,36.28-15l19.27,19.26c-13.13,29.88-7.61,59.11,8.62,79.73l-.17.17A16,16,0,0,0,144,176l11.31,11.31a16,16,0,0,0,22.63,0L283.31,81.94a16,16,0,0,0,0-22.63L272,48a16,16,0,0,0-22.62,0l-.17.17c-20.62-16.23-49.83-21.75-79.73-8.62L150.22,20.28A69.25,69.25,0,0,0,32,69.25V256H16A16,16,0,0,0,0,272v16a16,16,0,0,0,16,16H496a16,16,0,0,0,16-16V272A16,16,0,0,0,496,256Z"></path>
+                                </svg>
+                                <span class="ml-2 text-gray-500">{{ house.baths }}</span>
+                                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="th-large"
+                                     class="svg-inline--fa fa-th-large fa-w-16 h-5 w-5 ml-3" role="img"
+                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                    <path fill="currentColor"
+                                          d="M296 32h192c13.255 0 24 10.745 24 24v160c0 13.255-10.745 24-24 24H296c-13.255 0-24-10.745-24-24V56c0-13.255 10.745-24 24-24zm-80 0H24C10.745 32 0 42.745 0 56v160c0 13.255 10.745 24 24 24h192c13.255 0 24-10.745 24-24V56c0-13.255-10.745-24-24-24zM0 296v160c0 13.255 10.745 24 24 24h192c13.255 0 24-10.745 24-24V296c0-13.255-10.745-24-24-24H24c-13.255 0-24 10.745-24 24zm296 184h192c13.255 0 24-10.745 24-24V296c0-13.255-10.745-24-24-24H296c-13.255 0-24 10.745-24 24v160c0 13.255 10.745 24 24 24z"></path>
+                                </svg>
+                                <span class="ml-2 text-gray-500">{{ house.area }}</span>
+                            </div>
+                        </div>
+                        <div class="flex justify-between bg-gradient-to-r from-purple-600 to-fuchsia-500 text-gray-300 p-3 rounded-b-md">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-rose-800" fill="none"
+                                 viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width={2}
+                                      d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                            </svg>
+                            <p class="flex items-center">
+                                <span class="text-sm mr-2">Posted By</span>
+                                <span class="text-lg text-gray-100 font-medium">{{ house.owner.username }}</span>
+                            </p>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'admin/base_site.html' %}
+
+{% block extrastyle %}
+<style>
+    :root {
+        --primary: linear-gradient(to right, #7E22CE, #A21CAF);
+        --accent: #FECDD3;
+        --header-bg: linear-gradient(to right ,#9333EA, #C026D3);
+        --button-hover-bg: linear-gradient(to right, #9333EA, #C026D3);
+        --default-button-bg: #22C55E;
+        --default-button-hover-bg: #16A34A;
+        --delete-button-bg: #E11D48;
+        --delete-button-hover-bg: #BE123C;
+        --selected-row: #BBF7D0;
+        --object-tools-bg: #581C87;
+        --object-tools-hover-bg: #6B21A8;
+        --link-fg: #C026D3;
+        --link-selected-fg: #A855F7;
+        --link-hover-color: #9333EA;
+        --body-quiet-color: #7E22CE;
+    }
+
+    #branding h1 {
+        font-weight: 400;
+    }
+    #toolbar form input[type="submit"] {
+        background: #C026D3 !important;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --selected-row: #14532D;
+            --link-fg: #E879F9;
+            --link-hover-color: #C084FC;
+            --body-quiet-color: #F3E8FF;
+            --darkened-bg: #171717;
+        }
+    }
+</style>
+{% endblock %}

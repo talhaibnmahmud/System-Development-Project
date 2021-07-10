@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    Signup
+{% endblock %}
+
+{% block main %}
+    <main class="min-h-screen flex justify-center items-center py-8 px-4 sm:px-6 lg:px-8">
+
+        <div class="max-w-md w-full space-y-6">
+            <div>
+                <a href="/">
+                    {#                <img class="mx-auto h-12 w-auto" src="{% static 'images/icon.svg' %}"#}
+                    {#                    alt="Shikhon" />#}
+                    <h1 class="bg-gradient-to-r from-purple-600 to-fuchsia-500 bg-clip-text text-center text-4xl text-transparent tracking-wide font-extrabold">
+                        Rental BD</h1>
+                </a>
+                <h2 class="mt-4 text-center text-2xl font-bold text-gray-900">Sign up for your account</h2>
+                <p class="mt-2 text-center text-sm text-gray-600">
+                    <span class="block">Already have an account?</span>
+                    <a href="{% url 'user:login' %}" class="font-medium text-purple-600 hover:text-purple-700">
+                        Log in
+                    </a>
+                </p>
+            </div>
+
+            <form action="#" method="post" class="mt-8 space-y-6">
+                {% csrf_token %}
+                <input type="hidden" name="remember" value="true"/>
+
+                <div class="rounded-md shadow-sm">
+                    <div class="my-4">
+                        <label for="username" class="block mb-1 text-gray-800 text-base font-normal tracking-wide">Username: </label>
+                        <input type="text" name="username" id="username" required
+                               class="appearance-none relative w-full px-3 py-2 border border-gray-300 placeholder-gray-300 text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 focus:z-10 sm:text-sm"
+                               placeholder="username"/>
+                    </div>
+                    <div class="my-4">
+                        <label for="email-address" class="block mb-1 text-gray-800 text-base font-normal tracking-wide">Email
+                            Address: </label>
+                        <input type="email" name="email" id="email-address" autoComplete="email"
+                               class="appearance-none relative w-full px-3 py-2 border border-gray-300 placeholder-gray-300 text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 focus:z-10 sm:text-sm"
+                               placeholder="example@email.com"/>
+                    </div>
+                    <div class="my-4">
+                        <label for="phone" class="block mb-1 text-gray-800 text-base font-normal tracking-wide">Phone
+                            Number: </label>
+                        <input type="tel" name="phone" id="phone" autoComplete="phone"
+                               class="appearance-none relative w-full px-3 py-2 border border-gray-300 placeholder-gray-300 text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 focus:z-10 sm:text-sm"
+                               placeholder="01 XXX XX XX XX"/>
+                    </div>
+                    <div class="my-4">
+                        <label for="password" class="block mb-1 text-gray-800 text-base font-normal tracking-wide">Password: </label>
+                        <input type="password" name="password" id="password" autoComplete="new-password" required
+                               class="appearance-none relative w-full px-3 py-2 border border-gray-300 placeholder-gray-300 text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 focus:z-10 sm:text-sm"
+                               placeholder="Password"/>
+                    </div>
+                    <div class="my-4">
+                        <label for="first_name" class="block mb-1 text-gray-800 text-base font-normal tracking-wide">First
+                            Name: </label>
+                        <input type="text" name="first_name" id="first_name" autoComplete="name"
+                               class="appearance-none relative w-full px-3 py-2 border border-gray-300 placeholder-gray-300 text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 focus:z-10 sm:text-sm"
+                               placeholder="Enter first name"/>
+                    </div>
+                    <div class="my-4">
+                        <label for="last_name" class="block mb-1 text-gray-800 text-base font-normal tracking-wide">Last
+                            Name: </label>
+                        <input type="text" name="last_name" id="last_name" autoComplete="name"
+                               class="appearance-none relative w-full px-3 py-2 border border-gray-300 placeholder-gray-300 text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 focus:z-10 sm:text-sm"
+                               placeholder="Enter Last Name"/>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center">
+                        <!-- <input type="checkbox" name="remember_me" id="remember_me"
+                            class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" /> -->
+                        <p class="block ml-2 text-sm text-gray-900">Already have an account?</p>
+                    </div>
+
+                    <div class="text-sm">
+                        <a href="{% url 'user:login' %}" class="font-medium text-purple-600 hover:text-purple-700">Log
+                            in instead</a>
+                    </div>
+                </div>
+
+                <div>
+                    <button type="submit"
+                            class="relative group w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-purple-600 to-fuchsia-500 hover:from-purple-700 hover:to-fuchsia-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                    <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+                        <svg class="h-5 w-5 text-fuchsia-200 group-hover:text-fuchsia-100"
+                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                             aria-hidden="true">
+                            <path fill-rule="evenodd"
+                                  d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+                                  clip-rule="evenodd"></path>
+                        </svg>
+                    </span>
+                        Sign Up
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+{% endblock %}

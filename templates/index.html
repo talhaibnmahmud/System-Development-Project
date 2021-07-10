@@ -1,0 +1,237 @@
+{% extends 'main.html' %}
+
+{% load house_extras %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block content %}
+    <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+        {% if not request.user.is_authenticated %}
+            <div class="">
+                <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between">
+                    <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                        <span class="block tracking-wide text-purple-600">Ready to dive in?</span>
+                        <span class="block tracking-wide text-fuchsia-600">Create your first post today</span>
+                    </h2>
+                    <div class="mt-8 flex lg:mt-0 lg:flex-shrink-0">
+                        <div class="inline-flex rounded-md shadow">
+                            <a
+                                    href="{% url 'user:login' %}"
+                                    class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700">
+                                Log in
+                            </a>
+                        </div>
+                        <div class="ml-3 inline-flex rounded-md shadow">
+                            <a
+                                    href="{% url 'user:signup' %}"
+                                    class="inline-flex items-center justify-center px-5 py-3 border border-fuchsia-600 text-base font-medium rounded-md text-fuchsia-600 hover:text-white hover:bg-fuchsia-600">
+                                Sign Up
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="grid gap-5 my-5 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+            {% for house in houses %}
+                <div class="mx-auto m-3">
+                    <div class="block bg-white rounded-md shadow-sm w-11/12 mx-auto">
+                        <a href="{% url 'house:detail' house.id %}" class="block">
+                        <div>
+                            {% if house.photo_set.exists %}
+                            <img src="{{ house.photo_set.first.photo.url }}"
+                                 class="block rounded-t-md w-full h-48 object-cover" alt=""/>
+                            {% else %}
+                            <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80"
+                                 class="block rounded-t-md w-full h-48 object-cover" alt=""/>
+                            {% endif %}
+                            {#                    <img src="/work.jfif" class="block rounded-t-md w-full h-48 object-cover" />#}
+                        </div>
+                        <div class="flex justify-start items-center p-3 pb-2">
+                            <p class="capitalize text-sm text-gray-400 leading-3 mr-5">{{ house.category }}</p>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                 stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                            <small class="ml-5 mr-2 text-gray-700 font-semibold">BDT</small>
+                            <h3 class="text-xl text-gray-800 font-medium truncate">{{ house.price }}</h3>
+                        </div>
+
+                        <div class="px-3">
+                            <p
+                                    class="text-base text-purple-600 hover:text-purple-700 font-medium tracking-wide leading-6 truncate"
+                                    style="max-width: 20ch"
+                                    title="{{ house.address }}"
+                            >
+                                {{ house.address }}
+                            </p>
+                            <div class="flex items-center text-gray-400 my-5">
+                                <svg
+                                        aria-hidden="true"
+                                        focusable="false"
+                                        data-prefix="fas"
+                                        data-icon="bed"
+                                        class="svg-inline--fa fa-bed fa-w-20 h-5"
+                                        role="img"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 640 512"
+                                >
+                                    <path fill="currentColor"
+                                          d="M176 256c44.11 0 80-35.89 80-80s-35.89-80-80-80-80 35.89-80 80 35.89 80 80 80zm352-128H304c-8.84 0-16 7.16-16 16v144H64V80c0-8.84-7.16-16-16-16H16C7.16 64 0 71.16 0 80v352c0 8.84 7.16 16 16 16h32c8.84 0 16-7.16 16-16v-48h512v48c0 8.84 7.16 16 16 16h32c8.84 0 16-7.16 16-16V240c0-61.86-50.14-112-112-112z"></path>
+                                </svg>
+                                <span class="ml-2 text-gray-500">{{ house.beds }}</span>
+                                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bath"
+                                     class="svg-inline--fa fa-bath fa-w-16 h-5 w-5 ml-3" role="img"
+                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                    <path fill="currentColor"
+                                          d="M32,384a95.4,95.4,0,0,0,32,71.09V496a16,16,0,0,0,16,16h32a16,16,0,0,0,16-16V480H384v16a16,16,0,0,0,16,16h32a16,16,0,0,0,16-16V455.09A95.4,95.4,0,0,0,480,384V336H32ZM496,256H80V69.25a21.26,21.26,0,0,1,36.28-15l19.27,19.26c-13.13,29.88-7.61,59.11,8.62,79.73l-.17.17A16,16,0,0,0,144,176l11.31,11.31a16,16,0,0,0,22.63,0L283.31,81.94a16,16,0,0,0,0-22.63L272,48a16,16,0,0,0-22.62,0l-.17.17c-20.62-16.23-49.83-21.75-79.73-8.62L150.22,20.28A69.25,69.25,0,0,0,32,69.25V256H16A16,16,0,0,0,0,272v16a16,16,0,0,0,16,16H496a16,16,0,0,0,16-16V272A16,16,0,0,0,496,256Z"></path>
+                                </svg>
+                                <span class="ml-2 text-gray-500">{{ house.baths }}</span>
+                                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="th-large"
+                                     class="svg-inline--fa fa-th-large fa-w-16 h-5 w-5 ml-3" role="img"
+                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                    <path fill="currentColor"
+                                          d="M296 32h192c13.255 0 24 10.745 24 24v160c0 13.255-10.745 24-24 24H296c-13.255 0-24-10.745-24-24V56c0-13.255 10.745-24 24-24zm-80 0H24C10.745 32 0 42.745 0 56v160c0 13.255 10.745 24 24 24h192c13.255 0 24-10.745 24-24V56c0-13.255-10.745-24-24-24zM0 296v160c0 13.255 10.745 24 24 24h192c13.255 0 24-10.745 24-24V296c0-13.255-10.745-24-24-24H24c-13.255 0-24 10.745-24 24zm296 184h192c13.255 0 24-10.745 24-24V296c0-13.255-10.745-24-24-24H296c-13.255 0-24 10.745-24 24v160c0 13.255 10.745 24 24 24z"></path>
+                                </svg>
+                                <span class="ml-2 text-gray-500">{{ house.area }}</span>
+                            </div>
+                        </div>
+                        </a>
+                        <div class="flex justify-between bg-gradient-to-r from-purple-600 to-fuchsia-500 text-gray-300 p-3 rounded-b-md">
+                            {% if request.user.is_authenticated %}
+                            <span>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-6 w-6 hover:text-rose-800 cursor-pointer {% if house.id in favourites %} hidden {% endif %}"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                data-favourite-url="{% url 'house:add-favourite' house.id %}"
+                            >
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width={2}
+                                      d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                            </svg>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-6 w-6 text-rose-500 cursor-pointer {% if house.id not in favourites %} hidden {% endif %}"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                                data-favourite-url="{% url 'house:remove-favourite' house.id %}"
+                            >
+                              <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path>
+                            </svg>
+                            </span>
+                            {% endif %}
+                            <p class="flex items-center">
+                                <span class="text-sm mr-2">Posted By</span>
+                                <span class="text-lg text-gray-100 font-medium">{{ house.owner.username }}</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        {% if is_paginated %}
+        <div class="bg-white my-3 px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+            <div class="flex-1 flex justify-between sm:hidden">
+                <a href="#"
+                   class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-500">
+                    Previous
+                </a>
+                <a href="#"
+                   class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-500">
+                    Next
+                </a>
+            </div>
+            <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                <div>
+                    <p class="text-sm text-gray-700">
+                        Showing
+                        <span class="font-medium"> {{ page_obj.number }} </span>
+{#                        to#}
+{#                        <span class="font-medium"> {{ page_obj.number |multiply:-4 |add:paginator.count }} </span>#}
+                        of
+                        <span class="font-medium"> {{ paginator.num_pages }} </span>
+                        Pages
+                    </p>
+                </div>
+                <div>
+                    <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                        <a href="/?page=1"
+                           class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                            <span class="sr-only">Previous</span>
+                            <!-- Heroicon name: solid/chevron-left -->
+                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                 fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd"
+                                      d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                      clip-rule="evenodd"></path>
+                            </svg>
+                        </a>
+                        {% for page in paginator.page_range %}
+
+                        <a
+                            href="/?page={{ page }}"
+                            data-page-number="{{ page }}"
+                            class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                            {{ page }}
+                        </a>
+                        {% endfor %}
+
+{#                        <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">#}
+{#                        ...#}
+{#                        </span>#}
+
+                        <a href="/?page={{ paginator.num_pages }}"
+                           class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                            <span class="sr-only">Next</span>
+                            <!-- Heroicon name: solid/chevron-right -->
+                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                 fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd"
+                                      d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                      clip-rule="evenodd"></path>
+                            </svg>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+{#    {% for favourite in favourites %}#}
+{#    {{ favourite }}#}
+{#    {% endfor %}#}
+
+{% endblock %}
+
+{% block extra_script %}
+<script>
+    const favouriteButtons = document.querySelectorAll('[data-favourite-url]');
+    favouriteButtons.forEach((btn) => {
+        btn?.addEventListener('click', async () => {
+            const response = await favourite(btn?.dataset.favouriteUrl);
+
+            if (response.ok) {
+                btn?.classList.add('hidden');
+                if (btn?.nextElementSibling) {
+                    btn?.nextElementSibling?.classList.remove('hidden');
+                } else {
+                    btn?.previousElementSibling?.classList.remove('hidden');
+                }
+            }
+        });
+    });
+
+    const favourite = async (url='') => {
+        return await fetch(url, {method: 'POST'});
+    };
+
+</script>
+{% endblock %}

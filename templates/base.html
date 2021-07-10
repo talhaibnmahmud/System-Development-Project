@@ -1,0 +1,99 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rental BD | {% block title %}
+
+    {% endblock %}</title>
+
+    <link rel="manifest" href="{% static 'manifest.json' %}">
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static '/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static '/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static '/favicon-16x16.png' %}">
+{#    <link rel="apple-touch-icon" sizes="57x57" href="{% static 'shikhon/apple-icon-57x57.png' %}" />#}
+{#    <link rel="apple-touch-icon" sizes="60x60" href="{% static 'shikhon/apple-icon-60x60.png' %}" />#}
+{#    <link rel="apple-touch-icon" sizes="72x72" href="{% static 'shikhon/apple-icon-72x72.png' %}" />#}
+{#    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'shikhon//apple-icon-76x76.png' %}" />#}
+{#    <link rel="apple-touch-icon" sizes="114x114" href="{% static 'shikhon/apple-icon-114x114.png' %}" />#}
+{#    <link rel="apple-touch-icon" sizes="120x120" href="{% static 'shikhon/apple-icon-120x120.png' %}" />#}
+{#    <link rel="apple-touch-icon" sizes="144x144" href="{% static 'shikhon/apple-icon-144x144.png' %}" />#}
+{#    <link rel="apple-touch-icon" sizes="152x152" href="{% static 'shikhon/apple-icon-152x152.png' %}" />#}
+{#    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'shikhon/apple-icon-180x180.png' %}" />#}
+{#    <link rel="icon" type="image/png" sizes="192x192"  href="{% static 'shikhon/android-icon-192x192.png' %}" />#}
+{#    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'shikhon/favicon-32x32.png' %}" />#}
+{#    <link rel="icon" type="image/png" sizes="96x96" href="{% static 'shikhon/favicon-96x96.png' %}" />#}
+{#    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'shikhon/favicon-16x16.png' %}" />#}
+{#    <link rel="manifest" href="{% static 'shikhon/manifest.json' %}" />#}
+{#    <meta name="msapplication-TileColor" content="#ffffff" />#}
+{#    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />#}
+{#    <meta name="theme-color" content="#ffffff"/>#}
+
+    <!-- Site Info -->
+    <meta name="author" content="Talha Ibne Mahmud" />
+    <meta name="application-name" content="Rental BD" />
+    <meta name="description"
+        content="Shikhon Academy is an online tuition and learning community primarily based on Bangladesh" />
+    <meta name="keywords" content="Rental BD" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@rentalbd" />
+    <meta name="twitter:creator" content="@talha1728" />
+    <meta property="twitter:title" content="Rental BD" />
+{#    <meta property="twitter:image" content="https://shikhon.vercel.app/work.jfif" />#}
+    <meta property="twitter:description" content="Rental BD" />
+    <!-- Open Graph Card -->
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Rental BD" />
+    <meta property="og:site_name" content="Rental BD" />
+{#    <meta property="og:url" content="https://shikhon.vercel.app/" />#}
+{#    <meta property="og:image" content="https://shikhon.vercel.app/work.jfif" />#}
+    <meta property="og:description" content="Rental BD" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+            rel="stylesheet"/>
+
+    <!--  Tailwind CSS CDN -->
+    <!-- <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet"> -->
+
+    <!-- Tailwind CSS -->
+    <link rel="stylesheet" href="{% static 'css/tailwind.css' %}" type="text/css">
+
+    <!-- JS -->
+    <script src="{% static 'js/main.js' %}" defer></script>
+    
+    {% block style %}
+    
+    {% endblock %}
+
+    {% block script %}
+    
+    {% endblock %}
+</head>
+
+<body class="">
+    {% block main %}
+    
+    {% endblock %}
+
+    {% block extra_script %}
+    
+    {% endblock %}
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register("{% url 'sw' %}");
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+{% load static %}
+
+<nav class="bg-gradient-to-r from-purple-600 to-fuchsia-600">
+    <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+        <div class="relative flex items-center justify-between h-16">
+            <div class="absolute left-0 inset-y-0 flex items-center sm:hidden">
+                <!-- Mobile Menu Button -->
+                <button
+                    id="menu-toggle"
+                    type="button"
+                    class="inline-flex items-center justify-center p-2 rounded-md text-gray-100  hover:bg-fuchsia-600 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-fuchsia-500"
+                >
+                    <span class="sr-only">Open Main Menu</span>
+
+                    <!--
+                        Icon when menu is closed.
+
+                        Heroicon name: outline/menu
+
+                        Menu open: "hidden", Menu closed: "block"
+                    -->
+                    <svg id="hamburger" class="h-6 w-6 block" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                    <!--
+                        Icon when menu is open.
+
+                        Heroicon name: outline/x
+
+                        Menu open: "block", Menu closed: "hidden"
+                    -->
+                    <svg id="close" class="h-6 w-6 hidden" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="flex flex-1 justify-center items-center sm:justify-start sm:items-stretch">
+                <a href="/" class="flex items-center flex-shrink-0">
+                    <!-- <img class="block lg:hidden h-8 w-auto"
+                        src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg" alt="Workflow" /> -->
+{#                    <img class="block h-8 w-auto" src="{% static 'shikhon/icon.svg' %}" alt="Shikhon" />#}
+                    <h1 class="sm:block text-white text-2xl font-semibold leading-3 px-2 mt-1">Rental BD</h1>
+                    <!-- <img class="hidden lg:block h-8 w-auto"
+                        src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
+                        alt="Workflow" /> -->
+                </a>
+                <div class="hidden sm:block sm:ml-6">
+                    <div class="flex space-x-4">
+                        {% if request.user.is_authenticated %}
+                        <a href="{% url 'house:create' %}" class="bg-fuchsia-600 text-white block px-3 py-2 rounded-md text-base font-medium">Create Post</a>
+                        {% endif %}
+                        <a href="{% url 'house:search' %}" class="text-white hover:bg-fuchsia-600 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                            Search
+                        </a>
+                        <a href="{% url 'house:filter' %}" class="text-white hover:bg-fuchsia-600 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                            Advanced
+                        </a>
+                        <a href="{% url 'contact:contact-us' %}" class="text-white hover:bg-fuchsia-600 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                            Contact
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            {% if request.user.is_authenticated %}
+            <div class="absolute right-0 inset-y-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                <button
+                    class="bg-purple-600 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-fuchsia-400 focus:ring-purple-700"
+                >
+                    <span class="sr-only">View notifications</span>
+                    <!-- Heroicon name: outline/bell -->
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                      <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                      ></path>
+                    </svg>
+                </button>
+
+                <!-- Profile Dropdown -->
+                <div class="ml-3 relative">
+                    <div>
+                        <button
+                            class="bg-purple-600 flex text-sm text-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-fuchsia-400 focus:ring-purple-700"
+                            id="user-menu"
+                            aria-haspopup="true"
+                        >
+                            <span class="sr-only">Open user menu</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+{#                            <img src="{% static 'shikhon/profile.jfif' %}" alt="Profile Image" class="h-8 w-8 rounded-full object-cover" />#}
+                        </button>
+                    </div>
+
+                    <div id="user-dropdown"
+                        class="hidden absolute origin-top-right right-0 mt-2 w-48 rounded-md shadow-lg bg-fuchsia-600 ring-1 ring-purple-600 ring-opacity-5 focus:outline-none"
+                        role="menu"
+                        aria-orientation="vertical"
+                        aria-labelledby="user-menu"
+                    >
+                        <a href="{% url 'user:profile' request.user.username %}" class="block px-4 py-2 rounded-t-md text-base text-gray-100 font-medium hover:bg-purple-600" role="menuitem">Profile</a>
+                        <a href="{% url 'house:favourites' %}" class="block px-4 py-2 text-base text-gray-100 font-medium hover:bg-purple-600" role="menuitem">Favourites</a>
+                        <a href="{% url 'user:logout' %}" class="block px-4 py-2 rounded-b-md text-base text-gray-100 font-medium hover:bg-purple-600" role="menuitem">Logout</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div id="mobile-menu" class="hidden sm:hidden">
+        <div class="px-2 pt-2 pb-3 space-y-1">
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'house:create' %}" class="bg-fuchsia-600 text-white block px-3 py-2 rounded-md text-base font-medium">Create Post</a>
+            {% endif %}
+            <a href="{% url 'house:search' %}" class="text-white hover:bg-fuchsia-600 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                Search
+            </a>
+            <a href="{% url 'house:filter' %}" class="text-white hover:bg-fuchsia-600 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                Advanced
+            </a>
+            <a href="{% url 'contact:contact-us' %}" class="text-white hover:bg-fuchsia-600 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                Contact
+            </a>
+        </div>
+    </div>
+</nav>
