@@ -12,4 +12,3 @@ def multiply(value, arg):
 
 
 register.filter(name='multiply', filter_func=multiply)
-
