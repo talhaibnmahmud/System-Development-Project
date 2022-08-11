@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Libraries
+    'debug_toolbar',
     'django_filters',
 
     # Apps
@@ -52,6 +53,10 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+
+    # Debug
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
+
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -148,3 +153,13 @@ MEDIA_URL = '/media/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static/',
 ]
+
+# Internal IPs for Debug Toolbar
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
+
+# Debug toolbar
+if DEBUG:
+    import mimetypes
+    mimetypes.add_type('application/javascript', '.js', True)

@@ -1,304 +1,288 @@
 {% extends 'main.html' %}
 
 {% block title %}
-    House - {{ house.title }}
+House - {{ house.title }}
 {% endblock %}
 
 {% block style %}
-    <style>
-        .snap-x {
-            scroll-snap-type: x mandatory;
+<style>
+    .snap-x {
+        scroll-snap-type: x mandatory;
 
-            scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
-        }
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+    }
 
-        .snap-start {
-            scroll-snap-align: start;
-        }
-
-    </style>
+    .snap-start {
+        scroll-snap-align: start;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
-    <div class="max-w-7xl mx-auto my-5 px-4 sm:px-6 lg:px-8">
-        {% if photos %}
-        <div class="flex flex-col items-center my-8 mt-20">
-            <div class="w-full bg-white rounded overflow-x-hidden flex snap-x">
-                <div class="snap-start w-full h-full flex items-center justify-center text-white text-4xl font-bold flex-shrink-0 bg-gray-100 relative"
-                     id="slide-6">
-                    {% with photos.0 as title %}
-                        <img
-                                src="{{ title.photo.url }}"
-                                class="h-64 w-64 object-cover"
-                                alt="{{ title }}"
-                                id="slider"
-                        >
-                    {% endwith %}
-                </div>
-            </div>
-
-            <div class="flex mt-8" id="buttons">
-                {% for photo in photos %}
-                    <button
-                            class="w-8 mr-1 h-8 text-gray-700 rounded-full bg-gray-100 flex justify-center items-center focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
-                            data-src="{{ forloop.counter }}"
-                    >
-                        {{ forloop.counter }}
-                    </button>
-                {% endfor %}
+<div class="max-w-7xl mx-auto my-5 px-4 sm:px-6 lg:px-8">
+    {% if photos %}
+    <div class="flex flex-col items-center my-8 mt-20">
+        <div class="w-full bg-white rounded overflow-x-hidden flex snap-x">
+            <div class="snap-start w-full h-full flex items-center justify-center text-white text-4xl font-bold flex-shrink-0 bg-gray-100 relative"
+                id="slide-6">
+                {% with photos.0 as image %}
+                <img src="{{ image.photo.url }}" class="h-64 w-64 object-cover" alt="{{ house.title }}" id="slider">
+                {% endwith %}
             </div>
         </div>
-        {% endif %}
 
-        <div class="md:flex no-wrap md:-mx-2">
-            <!-- Left Side -->
-            <div class="bg-white w-full md:w-3/12 md:mx-2 rounded-sm shadow-sm">
-                <!-- Profile Card -->
-                <div class="p-3 rounded-t-md border-t-4 border-purple-600">
-                    <div class="image overflow-hidden">
-                        {% if photos %}
-                        <img class="h-auto w-full mx-auto rounded-md"
-                             src="{{ photos.0.photo.url }}"
-                             alt=""/>
-                        {% endif %}
-{#                        <img class="h-auto w-full mx-auto rounded-md"#}
-{#                             src="https://lavinephotography.com.au/wp-content/uploads/2017/01/PROFILE-Photography-112.jpg"#}
-{#                             alt=""/>#}
-                    </div>
-                    <h1 class="text-gray-800 tracking-wide font-siliguri font-bold text-xl leading-8 mt-2">{{ house.title }}</h1>
-                    <h3 class="text-gray-600 font-siliguri font-lg text-semibold leading-6">{{ house.address }}</h3>
-                    <p class="text-sm text-gray-500 leading-6 mt-4">
-                        {{ house.description }}
-                    </p>
-                    <ul
-                            class="bg-gray-100 text-gray-600 hover:text-gray-700 py-2 px-3 mt-3 divide-y rounded shadow-sm">
-                        <li class="flex items-center py-3">
-                            <span>Status</span>
-                            <span class="ml-auto"><span
-                                    class="bg-green-600 py-1 px-2 rounded text-white text-sm">Active</span></span>
-                        </li>
-                        <li class="flex items-center py-3">
-                            <span>Date Posted</span>
-                            <span class="ml-auto">{{ house.created |date }}</span>
-                        </li>
-                    </ul>
-                </div>
-                <!-- End of profile card -->
-                <div class="my-4"></div>
-            </div>
-            <!-- Right Side -->
-            <div class="w-full md:w-9/12 md:mx-2">
-                <!-- Profile tab -->
-                <!-- About Section -->
-                <div class="bg-white p-3 shadow-sm rounded-sm">
-                    <div class="flex items-center space-x-2 px-4 font-semibold text-gray-900 leading-8">
-                    <span class="text-green-500">
-                        <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                             stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                        </svg>
-                    </span>
-                        <span class="tracking-wide">About</span>
-                    </div>
-                    <div class="text-gray-700">
-                        <div class="grid md:grid-cols-2 text-sm">
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">First Name</div>
-                                <div class="px-4 py-2">{{ house.owner.first_name }}</div>
-                            </div>
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">Last Name</div>
-                                <div class="px-4 py-2">{{ house.owner.last_name }}</div>
-                            </div>
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">Contact No.</div>
-                                <div class="px-4 py-2 flex items-center">
-                                    <span id="phone">{{ house.owner.phone }}</span>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        class="h-5 w-5 ml-2 cursor-pointer"
-                                        id="clipboard"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                    >
-                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-                                    </svg>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        class="h-5 w-5 ml-2 text-green-500 hidden cursor-pointer"
-                                        id="checked"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                    >
-                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
-                                    </svg>
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">Email.</div>
-                                <div class="px-4 py-2">
-                                    <a class="text-purple-600 hover:text-purple-700 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                       href="mailto:jane@example.com">
-                                        {{ house.owner.email }}
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% if request.user == house.owner %}
-                        <button
-                                class="block my-4 w-full bg-purple-600 text-white text-sm font-semibold rounded-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:shadow-xs">
-                            <a class="inline-block w-full h-full p-3" href="{% url 'house:update' house.id %}">
-                                Edit House
-                            </a>
-                        </button>
-                        <button
-                                class="block my-4 w-full bg-fuchsia-600 text-white text-sm font-semibold rounded-lg hover:bg-fuchsia-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:shadow-xs">
-                            <a class="inline-block w-full h-full p-3" href="{% url 'house:delete' house.id %}">
-                                Delete House
-                            </a>
-                        </button>
-                    {% endif %}
-                </div>
-                <!-- End of about section -->
-
-                <div class="my-4"></div>
-
-                <!-- Experience and education -->
-                <div class="bg-white p-3 shadow-sm rounded-sm">
-                    <div class="flex items-center space-x-2 px-4 font-semibold text-gray-900 leading-8">
-                    <span class="text-green-500">
-                        <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                             stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                        </svg>
-                    </span>
-                        <span class="tracking-wide">About</span>
-                    </div>
-                    <div class="text-gray-700">
-                        <div class="grid md:grid-cols-2 text-sm">
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">House Type</div>
-                                <div class="px-4 py-2">{{ house.category }}</div>
-                            </div>
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">Price</div>
-                                <div class="px-4 py-2">{{ house.price }}</div>
-                            </div>
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">Division</div>
-                                <div class="px-4 py-2">{{ house.division }}</div>
-                            </div>
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">District</div>
-                                <div class="px-4 py-2">{{ house.district }}</div>
-                            </div>
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">Bedrooms</div>
-                                <div class="px-4 py-2">{{ house.beds }}</div>
-                            </div>
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">Showers</div>
-                                <div class="px-4 py-2">{{ house.baths }}</div>
-                            </div>
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">Drawing Rooms</div>
-                                <div class="px-4 py-2">{{ house.drawing }}</div>
-                            </div>
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">Dining Rooms</div>
-                                <div class="px-4 py-2">{{ house.dining }}</div>
-                            </div>
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">Kitchen</div>
-                                <div class="px-4 py-2">{{ house.kitchen }}</div>
-                            </div>
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">Balcony</div>
-                                <div class="px-4 py-2">
-                                    {% if house.balcony %}
-                                        ✔
-                                    {% else %}
-                                        ❌
-                                    {% endif %}
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">Elevators</div>
-                                <div class="px-4 py-2">{{ house.elevators }}</div>
-                            </div>
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">Parking Space</div>
-                                <div class="px-4 py-2">
-                                    {% if house.parking_space %}
-                                        ✔
-                                    {% else %}
-                                        ❌
-                                    {% endif %}
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">Electricity Backup</div>
-                                <div class="px-4 py-2">
-                                    {% if house.electricity_backup %}
-                                        ✔
-                                    {% else %}
-                                        ❌
-                                    {% endif %}
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">Service Elevators</div>
-                                <div class="px-4 py-2">
-                                    {% if house.service_elevator %}
-                                        ✔
-                                    {% else %}
-                                        ❌
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End of Experience and education grid -->
-                </div>
-                <!-- End of profile tab -->
-            </div>
+        <div class="flex mt-8" id="buttons">
+            {% for photo in photos %}
+            <button
+                class="w-8 mr-1 h-8 text-gray-700 rounded-full bg-gray-100 flex justify-center items-center focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                data-src="{{ forloop.counter }}">
+                {{ forloop.counter }}
+            </button>
+            {% endfor %}
         </div>
     </div>
+    {% endif %}
+
+    <div class="md:flex no-wrap md:-mx-2">
+        <!-- Left Side -->
+        <div class="bg-white w-full md:w-3/12 md:mx-2 rounded-sm shadow-sm">
+            <!-- Profile Card -->
+            <div class="p-3 rounded-t-md border-t-4 border-purple-600">
+                <div class="image overflow-hidden">
+                    {% if photos %}
+                    <img class="h-auto w-full mx-auto rounded-md" src="{{ photos.0.photo.url }}" alt="" />
+                    {% endif %}
+                    {# <img class="h-auto w-full mx-auto rounded-md" #} {#
+                        src="https://lavinephotography.com.au/wp-content/uploads/2017/01/PROFILE-Photography-112.jpg" #}
+                        {# alt="" />#}
+                </div>
+                <h1 class="text-gray-800 tracking-wide font-siliguri font-bold text-xl leading-8 mt-2">{{ house.title }}
+                </h1>
+                <h3 class="text-gray-600 font-siliguri font-lg text-semibold leading-6">{{ house.address }}</h3>
+                <p class="text-sm text-gray-500 leading-6 mt-4">
+                    {{ house.description }}
+                </p>
+                <ul class="bg-gray-100 text-gray-600 hover:text-gray-700 py-2 px-3 mt-3 divide-y rounded shadow-sm">
+                    <li class="flex items-center py-3">
+                        <span>Status</span>
+                        <span class="ml-auto"><span
+                                class="bg-green-600 py-1 px-2 rounded text-white text-sm">Active</span></span>
+                    </li>
+                    <li class="flex items-center py-3">
+                        <span>Date Posted</span>
+                        <span class="ml-auto">{{ house.created |date }}</span>
+                    </li>
+                </ul>
+            </div>
+            <!-- End of profile card -->
+            <div class="my-4"></div>
+        </div>
+        <!-- Right Side -->
+        <div class="w-full md:w-9/12 md:mx-2">
+            <!-- Profile tab -->
+            <!-- About Section -->
+            <div class="bg-white p-3 shadow-sm rounded-sm">
+                <div class="flex items-center space-x-2 px-4 font-semibold text-gray-900 leading-8">
+                    <span class="text-green-500">
+                        <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                    </span>
+                    <span class="tracking-wide">About</span>
+                </div>
+                <div class="text-gray-700">
+                    <div class="grid md:grid-cols-2 text-sm">
+                        <div class="grid grid-cols-2">
+                            <div class="px-4 py-2 font-semibold">First Name</div>
+                            <div class="px-4 py-2">{{ house.owner.first_name }}</div>
+                        </div>
+                        <div class="grid grid-cols-2">
+                            <div class="px-4 py-2 font-semibold">Last Name</div>
+                            <div class="px-4 py-2">{{ house.owner.last_name }}</div>
+                        </div>
+                        <div class="grid grid-cols-2">
+                            <div class="px-4 py-2 font-semibold">Contact No.</div>
+                            <div class="px-4 py-2 flex items-center">
+                                <span id="phone">{{ house.owner.phone }}</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 cursor-pointer"
+                                    id="clipboard" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2">
+                                    </path>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5 ml-2 text-green-500 hidden cursor-pointer" id="checked" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4">
+                                    </path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2">
+                            <div class="px-4 py-2 font-semibold">Email.</div>
+                            <div class="px-4 py-2">
+                                <a class="text-purple-600 hover:text-purple-700 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                    href="mailto:jane@example.com">
+                                    {{ house.owner.email }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% if request.user == house.owner %}
+                <button
+                    class="block my-4 w-full bg-purple-600 text-white text-sm font-semibold rounded-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:shadow-xs">
+                    <a class="inline-block w-full h-full p-3" href="{% url 'house:update' house.id %}">
+                        Edit House
+                    </a>
+                </button>
+                <button
+                    class="block my-4 w-full bg-fuchsia-600 text-white text-sm font-semibold rounded-lg hover:bg-fuchsia-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:shadow-xs">
+                    <a class="inline-block w-full h-full p-3" href="{% url 'house:delete' house.id %}">
+                        Delete House
+                    </a>
+                </button>
+                {% endif %}
+            </div>
+            <!-- End of about section -->
+
+            <div class="my-4"></div>
+
+            <!-- Experience and education -->
+            <div class="bg-white p-3 shadow-sm rounded-sm">
+                <div class="flex items-center space-x-2 px-4 font-semibold text-gray-900 leading-8">
+                    <span class="text-green-500">
+                        <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                    </span>
+                    <span class="tracking-wide">About</span>
+                </div>
+                <div class="text-gray-700">
+                    <div class="grid md:grid-cols-2 text-sm">
+                        <div class="grid grid-cols-2">
+                            <div class="px-4 py-2 font-semibold">House Type</div>
+                            <div class="px-4 py-2">{{ house.category }}</div>
+                        </div>
+                        <div class="grid grid-cols-2">
+                            <div class="px-4 py-2 font-semibold">Price</div>
+                            <div class="px-4 py-2">{{ house.price }}</div>
+                        </div>
+                        <div class="grid grid-cols-2">
+                            <div class="px-4 py-2 font-semibold">Division</div>
+                            <div class="px-4 py-2">{{ house.division }}</div>
+                        </div>
+                        <div class="grid grid-cols-2">
+                            <div class="px-4 py-2 font-semibold">District</div>
+                            <div class="px-4 py-2">{{ house.district }}</div>
+                        </div>
+                        <div class="grid grid-cols-2">
+                            <div class="px-4 py-2 font-semibold">Bedrooms</div>
+                            <div class="px-4 py-2">{{ house.beds }}</div>
+                        </div>
+                        <div class="grid grid-cols-2">
+                            <div class="px-4 py-2 font-semibold">Showers</div>
+                            <div class="px-4 py-2">{{ house.baths }}</div>
+                        </div>
+                        <div class="grid grid-cols-2">
+                            <div class="px-4 py-2 font-semibold">Drawing Rooms</div>
+                            <div class="px-4 py-2">{{ house.drawing }}</div>
+                        </div>
+                        <div class="grid grid-cols-2">
+                            <div class="px-4 py-2 font-semibold">Dining Rooms</div>
+                            <div class="px-4 py-2">{{ house.dining }}</div>
+                        </div>
+                        <div class="grid grid-cols-2">
+                            <div class="px-4 py-2 font-semibold">Kitchen</div>
+                            <div class="px-4 py-2">{{ house.kitchen }}</div>
+                        </div>
+                        <div class="grid grid-cols-2">
+                            <div class="px-4 py-2 font-semibold">Balcony</div>
+                            <div class="px-4 py-2">
+                                {% if house.balcony %}
+                                ✔
+                                {% else %}
+                                ❌
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2">
+                            <div class="px-4 py-2 font-semibold">Elevators</div>
+                            <div class="px-4 py-2">{{ house.elevators }}</div>
+                        </div>
+                        <div class="grid grid-cols-2">
+                            <div class="px-4 py-2 font-semibold">Parking Space</div>
+                            <div class="px-4 py-2">
+                                {% if house.parking_space %}
+                                ✔
+                                {% else %}
+                                ❌
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2">
+                            <div class="px-4 py-2 font-semibold">Electricity Backup</div>
+                            <div class="px-4 py-2">
+                                {% if house.electricity_backup %}
+                                ✔
+                                {% else %}
+                                ❌
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2">
+                            <div class="px-4 py-2 font-semibold">Service Elevators</div>
+                            <div class="px-4 py-2">
+                                {% if house.service_elevator %}
+                                ✔
+                                {% else %}
+                                ❌
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End of Experience and education grid -->
+            </div>
+            <!-- End of profile tab -->
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block extra_script %}
-    <script>
-        const urls = [];
+<script>
+    const urls = [];
 
-        {% for photo in photos %}
-            urls.push('{{ photo.photo.url }}');
-        {% endfor %}
+    {% for photo in photos %}
+    urls.push('{{ photo.photo.url }}');
+    {% endfor %}
 
-        const slider = document.querySelector('#slider');
-        const buttons = document.querySelectorAll('[data-src]');
+    const slider = document.querySelector('#slider');
+    const buttons = document.querySelectorAll('[data-src]');
 
-        buttons.forEach((button) => button.addEventListener('click', () => {
-            slider.src = urls[button.dataset.src - 1];
-        }))
+    buttons.forEach((button) => button.addEventListener('click', () => {
+        slider.src = urls[button.dataset.src - 1];
+    }))
 
-        const phoneNumber = document.querySelector('#phone');
-        const clipboardBtn = document.querySelector('#clipboard');
-        const clipboardChecked = document.querySelector('#checked');
+    const phoneNumber = document.querySelector('#phone');
+    const clipboardBtn = document.querySelector('#clipboard');
+    const clipboardChecked = document.querySelector('#checked');
 
-        clipboardBtn?.addEventListener('click', async () => {
-            clipboardBtn?.classList.add('hidden');
-            clipboardChecked?.classList.remove('hidden');
+    clipboardBtn?.addEventListener('click', async () => {
+        clipboardBtn?.classList.add('hidden');
+        clipboardChecked?.classList.remove('hidden');
 
-            await navigator.clipboard.writeText(phoneNumber?.textContent);
-        });
-        clipboardChecked?.addEventListener('click', async () => {
-            await navigator.clipboard.writeText(phoneNumber?.textContent);
-        });
-    </script>
+        await navigator.clipboard.writeText(phoneNumber?.textContent);
+    });
+    clipboardChecked?.addEventListener('click', async () => {
+        await navigator.clipboard.writeText(phoneNumber?.textContent);
+    });
+</script>
 {% endblock %}
