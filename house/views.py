@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.utils import IntegrityError
+from django.http.request import HttpRequest
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls.base import reverse_lazy
@@ -25,7 +26,7 @@ class HouseListView(ListView):
     paginate_by = 12
     template_name = 'index.html'
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request: HttpRequest, *args, **kwargs):
         if request.user.is_authenticated:
             favourites = Favourite.objects.values_list('house_id', flat=True).filter(user=request.user)
             self.extra_context = {'favourites': favourites, }
@@ -38,7 +39,7 @@ class HouseListView(ListView):
 class HouseDetailView(DetailView):
     model = House
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request: HttpRequest, *args, **kwargs):
         photos = Photo.objects.filter(house=kwargs['pk'])
         self.extra_context = {'photos': photos, }
 
@@ -66,7 +67,7 @@ class HouseCreateView(LoginRequiredMixin, CreateView):
     #
     #     return super(HouseCreateView, self).form_valid(form)
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request: HttpRequest, *args, **kwargs):
         # print(request.POST)
         # print(kwargs)
         form = HouseCreateForm(request.POST)
@@ -102,7 +103,7 @@ class HouseUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     success_url = '/'
 
-    def test_func(self):
+    def test_func(self) -> bool:
         return self.request.user == self.get_object().owner
 
 
@@ -137,7 +138,7 @@ class HouseFilterView(FilterView):
 @method_decorator(csrf_exempt, name='dispatch')
 class AddFavouriteView(LoginRequiredMixin, View):
     @staticmethod
-    def post(request, *args, **kwargs):
+    def post(request: HttpRequest, *args, **kwargs):
         # print('Add PK', kwargs)
 
         house = get_object_or_404(House, id=kwargs['pk'])
@@ -154,7 +155,7 @@ class AddFavouriteView(LoginRequiredMixin, View):
 @method_decorator(csrf_exempt, name='dispatch')
 class DeleteFavouriteView(LoginRequiredMixin, View):
     @staticmethod
-    def post(request, *args, **kwargs):
+    def post(request: HttpRequest, *args, **kwargs):
         print('Delete PK', kwargs)
         house = get_object_or_404(House, id=kwargs['pk'])
 
